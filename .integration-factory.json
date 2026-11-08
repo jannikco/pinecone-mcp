@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "id": "pinecone-mcp",
+  "kind": "provider-connector",
+  "artifactType": "connector",
+  "qualityVersion": 2,
+  "title": "Pinecone MCP server",
+  "description": "List available indexes and inspect a selected index’s host and readiness before connecting a data-plane application. No index creation or destructive operation is exposed.",
+  "status": "ready",
+  "verification": "mock-only",
+  "releaseEligible": true,
+  "maintainer": "jannikco",
+  "license": "MIT",
+  "product": "pipmcp",
+  "appSlug": "pinecone",
+  "appName": "Pinecone",
+  "operationIds": [
+    "list_indexes",
+    "describe_index"
+  ],
+  "sourceRevision": "c8205fc94fe7aa908b0eb89e211009ec60e0ae744fc54c792ee5abbf3e375a1d",
+  "evidence": [
+    "Actual tools/call and direct-provider request contract tests"
+  ],
+  "provenance": [
+    "https://docs.pinecone.io/reference/api/2025-10/control-plane/list_indexes",
+    "https://docs.pinecone.io/reference/api/2025-10/control-plane/describe_index"
+  ],
+  "attributionSlug": "github-pinecone-mcp",
+  "connectorId": "pinecone",
+  "connector": {
+    "id": "pinecone",
+    "name": "Pinecone",
+    "version": "0.1.0",
+    "baseUrl": "https://api.pinecone.io",
+    "auth": {
+      "type": "header",
+      "env": "PINECONE_API_KEY",
+      "header": "Api-Key"
+    },
+    "description": "Inspect control-plane indexes and deployment status. This connector does not create infrastructure or query an index-specific data-plane host.",
+    "tools": [
+      {
+        "name": "list_indexes",
+        "description": "List indexes visible to the key’s project using the pinned control-plane API version.",
+        "method": "GET",
+        "path": "/indexes",
+        "readOnly": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": [],
+          "query": {},
+          "body": {}
+        },
+        "sampleArguments": {},
+        "provenance": [
+          "https://docs.pinecone.io/reference/api/2025-10/control-plane/list_indexes",
+          "https://docs.pinecone.io/reference/api/2025-10/control-plane/describe_index"
+        ]
+      },
+      {
+        "name": "describe_index",
+        "description": "Inspect index host, dimension and readiness metadata before configuring a separate data-plane client.",
+        "method": "GET",
+        "path": "/indexes/{index_name}",
+        "readOnly": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "index_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 45,
+              "pattern": "^[a-z0-9][a-z0-9-]*$"
+            }
+          },
+          "required": [
+            "index_name"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": [
+            "index_name"
+          ],
+          "query": {},
+          "body": {}
+        },
+        "sampleArguments": {
+          "index_name": "documents"
+        },
+        "provenance": [
+          "https://docs.pinecone.io/reference/api/2025-10/control-plane/list_indexes",
+          "https://docs.pinecone.io/reference/api/2025-10/control-plane/describe_index"
+        ]
+      }
+    ],
+    "provenance": [
+      "https://docs.pinecone.io/reference/api/2025-10/control-plane/list_indexes",
+      "https://docs.pinecone.io/reference/api/2025-10/control-plane/describe_index"
+    ],
+    "sourceEvidence": [
+      {
+        "url": "https://docs.pinecone.io/reference/api/2025-10/control-plane/list_indexes",
+        "sha256": "0a9368965c2000950c907781b8e082baede0ef989f3f8a147238840c63024db9",
+        "checkedAt": "2026-11-08T13:24:07.469650+00:00",
+        "method": "https-get"
+      },
+      {
+        "url": "https://docs.pinecone.io/reference/api/2025-10/control-plane/describe_index",
+        "sha256": "95a0f3a73e9b89850204d15505e8a4e61afe52663ed912871dc47d9df82d9c2d",
+        "checkedAt": "2026-11-08T13:24:07.469650+00:00",
+        "method": "https-get"
+      }
+    ],
+    "verification": "mock-only",
+    "providerLiveValidation": "not-run",
+    "headers": {
+      "X-Pinecone-Api-Version": "2025-10"
+    },
+    "workflow": {
+      "name": "Inspect an existing vector index",
+      "description": "List available indexes and inspect a selected index’s host and readiness before connecting a data-plane application. No index creation or destructive operation is exposed.",
+      "steps": [
+        "list_indexes",
+        "describe_index"
+      ]
+    },
+    "repoId": "pinecone-mcp",
+    "appSlug": "pinecone",
+    "product": "pipmcp",
+    "artifactType": "connector",
+    "sourceRevision": "c8205fc94fe7aa908b0eb89e211009ec60e0ae744fc54c792ee5abbf3e375a1d",
+    "capabilityEvidence": {
+      "local": {
+        "level": "Tested",
+        "operations": [
+          {
+            "name": "list_indexes",
+            "level": "Tested",
+            "evidenceRefs": [
+              "Provider request/stdio contract tests"
+            ],
+            "method": "contract-fixture"
+          },
+          {
+            "name": "describe_index",
+            "level": "Tested",
+            "evidenceRefs": [
+              "Provider request/stdio contract tests"
+            ],
+            "method": "contract-fixture"
+          }
+        ],
+        "evidenceRefs": [
+          "Provider request/stdio contract tests"
+        ],
+        "mode": "local"
+      },
+      "managed": {
+        "level": "Documented",
+        "operations": [
+          {
+            "name": "list_indexes",
+            "level": "Documented",
+            "evidenceRefs": [],
+            "method": "documentation"
+          },
+          {
+            "name": "describe_index",
+            "level": "Documented",
+            "evidenceRefs": [],
+            "method": "documentation"
+          }
+        ],
+        "evidenceRefs": [],
+        "mode": "managed"
+      }
+    },
+    "managedAvailability": {
+      "status": "listed",
+      "checkedAt": "2026-11-08T13:20:45.156456+00:00"
+    }
+  },
+  "capabilityEvidence": {
+    "local": {
+      "level": "Tested",
+      "operations": [
+        {
+          "name": "list_indexes",
+          "level": "Tested",
+          "evidenceRefs": [
+            "Provider request/stdio contract tests"
+          ],
+          "method": "contract-fixture"
+        },
+        {
+          "name": "describe_index",
+          "level": "Tested",
+          "evidenceRefs": [
+            "Provider request/stdio contract tests"
+          ],
+          "method": "contract-fixture"
+        }
+      ],
+      "evidenceRefs": [
+        "Provider request/stdio contract tests"
+      ],
+      "mode": "local"
+    },
+    "managed": {
+      "level": "Documented",
+      "operations": [
+        {
+          "name": "list_indexes",
+          "level": "Documented",
+          "evidenceRefs": [],
+          "method": "documentation"
+        },
+        {
+          "name": "describe_index",
+          "level": "Documented",
+          "evidenceRefs": [],
+          "method": "documentation"
+        }
+      ],
+      "evidenceRefs": [],
+      "mode": "managed"
+    }
+  },
+  "utility": {
+    "problem": "List available indexes and inspect a selected index’s host and readiness before connecting a data-plane application. No index creation or destructive operation is exposed.",
+    "output": "Actual provider API results through local MCP tools"
+  },
+  "providerDocs": "https://docs.pinecone.io/reference/api/2025-10/control-plane/list_indexes",
+  "factory": "leadadapter-pipmcp",
+  "generatorVersion": 2
+}

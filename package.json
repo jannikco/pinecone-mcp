@@ -1,0 +1,21 @@
+{
+  "name": "pinecone-mcp",
+  "version": "0.2.0",
+  "description": "List available indexes and inspect a selected index’s host and readiness before connecting a data-plane application. No index creation or destructive operation is exposed.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "pinecone-mcp": "server.mjs"
+  },
+  "scripts": {
+    "start": "node example.mjs",
+    "server": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0"
+  }
+}
