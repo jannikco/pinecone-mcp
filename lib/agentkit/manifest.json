@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "product": "pipmcp",
+  "credential": "PIPMCP_API_KEY",
+  "skills": [
+    {
+      "name": "pipmcp-pinecone",
+      "description": "Connect AI agents to Pinecone using one PipMCP API key and actual hosted tool discovery."
+    }
+  ],
+  "files": {
+    "skills/pipmcp-pinecone/SKILL.md": "c5c741a77fd449137a96ed84082f253f49a980bb43068001783f6971d443114b"
+  }
+}
